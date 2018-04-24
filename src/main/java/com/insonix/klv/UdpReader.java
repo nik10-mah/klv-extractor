@@ -16,9 +16,8 @@ import javax.swing.text.html.HTMLEditorKit;
 
 import org.codice.ddf.libs.klv.KlvDecodingException;
 
+import com.insonix.klv.threads.KlvDataSave;
 import com.insonix.klv.utils.Utilities;
-
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 
 /**
  * @author Nikhil Mahajan
@@ -118,6 +117,7 @@ public class UdpReader implements Runnable {
 					System.out.println("                                       ");
 					// send byte array to decode klv data to klv parser
 					String decodedData = KlvParser.parseKLVSet(klvArray);
+					System.out.println("Decoded Data is : " + decodedData);
 					writeToPane(decodedData);
 					// TODO; write to database
 					// TODO: use this byte packet array to pass to mediaPlayer to play video instead

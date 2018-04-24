@@ -19,6 +19,7 @@ import javax.swing.SpringLayout;
 import javax.swing.text.DefaultCaret;
 
 import com.insonix.klv.UdpReader;
+import com.insonix.klv.dao.SQLServerConnection;
 import com.insonix.klv.threads.KlvRead;
 
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
@@ -144,6 +145,7 @@ public class InfoPanel extends JPanel {
 	}
 
 	private void stopBtnAction(ActionEvent e) {
+		SQLServerConnection.closeConnection();
 		// TODO: Terminate All Threads
 		// TODO: Remove IConstants.KLV_FILE_PATH file
 		mediaPlayerComponent.getMediaPlayer().stop();
@@ -151,6 +153,7 @@ public class InfoPanel extends JPanel {
 	}
 
 	private void resetBtnAction(ActionEvent e) {
+		SQLServerConnection.closeConnection();
 		// Stope video
 		mediaPlayerComponent.getMediaPlayer().stop();
 		// stop klv thread

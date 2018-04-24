@@ -2,6 +2,8 @@ package com.insonix.klv.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  * @author Pramod Maurya
@@ -27,7 +29,6 @@ public class SQLServerConnection {
 	private static Connection connection;
 
 	public static void openConnection() {
-		if (null == connection) {
 			try {
 				Class.forName(DRIVER_CLASS_NAME);
 				connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -36,15 +37,44 @@ public class SQLServerConnection {
 				System.out.println("Failed to connect: " + e.getMessage());
 				e.printStackTrace();
 			}
-		}
 	}
+	
 
 	public static Connection getConnection() {
+		if(null==connection) {
+			openConnection();
+		}
 		return connection;
 	}
 
+	public static void closeConnection() {
+		if (null != connection) {
+			try {
+				connection.close();
+				System.out.println("Connection closed.");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * This method is use for close the prepared statement object.
+	 * @param preparedStatement
+	 */
+	public static void closePreparedStatement(PreparedStatement preparedStatement) {
+		if (null != preparedStatement) {
+			try {
+				preparedStatement.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+	}
+
 	public static void main(String[] args) {
-		SQLServerConnection.openConnection();
+		SQLServerConnection.getConnection();
 	}
 
 }
